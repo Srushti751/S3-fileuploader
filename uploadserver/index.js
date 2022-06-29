@@ -26,7 +26,22 @@ aws.config.update({
 const BUCKET = process.env.BUCKET
 const s3 = new aws.S3();
 
-
+// API to get signed url 
+// app.get('/get-signed-url', async (req, res) => {
+//     await s3.createPresignedPost({
+//         Fields: {
+//             key: uuidv4(),
+//         },
+//         headers: {
+//             'Access-Control-Allow-Origin': '*',
+//             'Access-Control-Allow-Credentials': true
+//         },
+//         Expires: 600,
+//         Bucket: BUCKET,
+//     }, (err, signed) => {
+//         res.json(signed);
+//     });
+// })
 
 // API for uploading files to Private S3 Bucket
 app.post("/uploadfile", async function (req, res, next) {
