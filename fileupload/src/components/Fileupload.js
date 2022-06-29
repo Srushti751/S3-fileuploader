@@ -10,6 +10,36 @@ function Fileupload() {
         setUploadedFile(event.target.files[0]);
     }
 
+    //Upload using presigned url
+        // const UploadHandler = async (e) => {
+    //     e.preventDefault()
+    //     const file = document.querySelector('input[name="file"]');
+    //     const resss = await axios.get("/get-signed-url")
+    //     const url = resss.data.url
+    //     const fields = resss.data.fields
+    //     const data = {
+    //         bucket: "assessmentbucket57",
+    //         ...fields,
+    //         'Content-Type': file.files[0].type,
+
+    //         file: file.files[0]
+    //     };
+    //     const formData = new FormData();
+    //     for (const name in data) {
+    //         formData.append(name, data[name]);
+    //     }
+ 
+    //     var options = {
+    //         headers: { 'Content-type': file.files[0].type, 'x-amz-acl': 'public-read' },
+
+    //     }
+    //     const response = await fetch(url, {
+    //         method: 'PUT',
+    //         body: formData,
+    //         options
+    //     })
+    //     console.log(response)
+    // }
 
     // Function to upload files 
     const newUpdateHandler = async (e) => {
