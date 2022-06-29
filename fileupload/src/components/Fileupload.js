@@ -71,9 +71,6 @@ function Fileupload() {
 
       <form className=" formStyle " encType="multipart/form-data">
         <div className="mb-5 formInput">
-          {/* <label htmlFor="exampleInputEmail1" className="form-label">
-            Choose File to Upload
-          </label> */}
           <input
             type="file"
             name="file"
