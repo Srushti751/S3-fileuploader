@@ -1,12 +1,10 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const fileupload = require("express-fileupload");
 
 const app = express();
 
 app.use(cors());
-app.use(fileupload());
 
 app.listen(3001, (req, res) => {
   console.log("server running");

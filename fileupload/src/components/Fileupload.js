@@ -66,12 +66,14 @@ function Fileupload() {
   }, []);
 
   return (
-    <>
-      <form className="container" encType="multipart/form-data">
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
+    <div className="container mt-3">
+      <h4>Choose file to Upload</h4>
+
+      <form className=" formStyle " encType="multipart/form-data">
+        <div className="mb-5 formInput">
+          {/* <label htmlFor="exampleInputEmail1" className="form-label">
             Choose File to Upload
-          </label>
+          </label> */}
           <input
             type="file"
             name="file"
@@ -80,16 +82,18 @@ function Fileupload() {
             ref={fileInputRef}
           />
         </div>
-        <button
-          type="submit"
-          onClick={(e) => UploadHandler(e)}
-          className="btn btn-dark mb-5"
-        >
-          Upload
-        </button>
+        <div className="formButton">
+          <button
+            type="submit"
+            onClick={(e) => UploadHandler(e)}
+            className="btn btn-dark mb-5"
+          >
+            Upload
+          </button>
+        </div>
       </form>
-
       <div className="list-group container ">
+        <h5>Uploaded files </h5>
         {files &&
           files.map((file, index) => {
             return (
@@ -105,7 +109,7 @@ function Fileupload() {
             );
           })}
       </div>
-    </>
+    </div>
   );
 }
 
