@@ -45,13 +45,15 @@ const s3 = new aws.S3();
 
 // API for uploading files to Private S3 Bucket
 app.post("/uploadfile", async function (req, res, next) {
-    let upload_params = { Bucket: BUCKET, Key: req.files.file.name, Body:req.files.file.data};
+    let upload_params = { Bucket: BUCKET, Key: req.files.file.name, Body: req.files.file.data };
     let upload = new aws.S3.ManagedUpload({ params: upload_params });
     let promise = upload.promise();
     promise.then(
-        function (data) { console.log("Successfully uploaded:", "file"); },
-        function (err) { console.log("Failed to upload", "with error:", err.message); }
-    );
+        function (data) { console.log("Successfully uploaded:", "file"); res.send("Upload successful") },
+        function (err) { console.log("Failed to upload", "with error:", err.message); res.send("Error") },
+
+    )
+        .catch(e => res.send("Error"))
 
 })
 
