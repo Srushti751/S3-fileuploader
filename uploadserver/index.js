@@ -31,7 +31,7 @@ app.get("/get-signed-url", async (req, res) => {
         key: req.headers.filename,
       },
       Conditions: [
-        ["starts-with", "$Content-Type", "image/"],
+        ["starts-with", "$Content-Type", req.headers.filetype],
         ["content-length-range", 0, 1000000],
       ],
       Expires: 600,

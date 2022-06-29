@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { saveAs } from "file-saver";
 
 function Fileupload() {
-  const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState("");
   const [files, setFiles] = useState([]);
+  const fileInputRef = useRef();
 
   const chooseFile = (event) => {
     setUploadedFile(event.target.files[0]);
@@ -13,28 +14,30 @@ function Fileupload() {
   //Upload using presigned url
   const UploadHandler = async (e) => {
     e.preventDefault();
-    const file = document.querySelector('input[name="file"]');
+
     const resss = await axios.get("/get-signed-url", {
-      headers: { filename: file.files[0].name },
+      headers: { filename: uploadedFile.name, fileType: uploadedFile.type },
     });
     const url = resss.data.url;
     const fields = resss.data.fields;
-    console.log(file.files[0].name);
     const data = {
       bucket: "assessmentbucket57",
       ...fields,
-      "Content-Type": file.files[0].type,
+      "Content-Type": uploadedFile.type,
 
-      file: file.files[0],
+      file: uploadedFile,
     };
-
     const formData = new FormData();
     for (const name in data) {
-      console.log(data[name]);
       formData.append(name, data[name]);
     }
 
     await axios.post(url, formData);
+    alert("File uploaded successfully");
+    setFiles([...files, uploadedFile.name]);
+
+    fileInputRef.current.value = "";
+    setUploadedFile(null);
   };
 
   //Function to fetch files
@@ -42,7 +45,7 @@ function Fileupload() {
     axios
       .get("/getfiles")
       .then((res) => {
-        setFiles([res.data]);
+        setFiles(res.data);
       })
       .catch((err) => console.log(err));
   };
@@ -74,6 +77,7 @@ function Fileupload() {
             name="file"
             onChange={chooseFile}
             className="form-control"
+            ref={fileInputRef}
           />
         </div>
         <button
@@ -86,10 +90,14 @@ function Fileupload() {
       </form>
 
       <div className="list-group container ">
-        {files[0] &&
-          files[0].map((file, index) => {
+        {files &&
+          files.map((file, index) => {
             return (
-              <button onClick={(e) => onDownload(file)} className="mb-2">
+              <button
+                key={index.toString()}
+                onClick={(e) => onDownload(file)}
+                className="mb-2"
+              >
                 <li className="list-group-item " key={index}>
                   {file}
                 </li>
